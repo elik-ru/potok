@@ -1,0 +1,5 @@
+@import "linear_gradient";
+
+.navbar-default {
+  @include linear-gradient(#001C1A,#005656);
+}

@@ -1,0 +1,65 @@
+h2 Рассчет ожидаемой доходности займа
+
+=bootstrap_form_tag url: "/", method: "POST", layout: :inline  do |f|
+  =f.text_field :amount, value: @newloan, label: "Введите сумму займа", append: "Руб"
+  =f.submit "Рассчитать", class: "btn btn-primary"
+  
+.table-responsive
+  table.table.loans
+    thead
+      tr
+        th Сценарий
+        th Сумма
+        th Будет возвращено
+        th Будет заработано
+        th Годовая доходность
+      tr
+        td Оптимистичный
+        - if @newloan
+          td = tabulate @newloan
+          td = tabulate @newloan * 1.3
+          td = tabulate @newloan * 0.3
+        - else
+          td
+          td
+          td
+        td 
+          = tabulate 30
+          | %
+      tr
+        td Реалистичный
+        - if @newloan
+          td = tabulate @newloan
+          td = tabulate @newloan * (1+Loan.profitability)
+          td = tabulate @newloan * Loan.profitability
+        - else
+          td
+          td
+          td
+        td 
+          = tabulate Loan.profitability * 100 
+          | %
+
+
+h2 История выдачи займов
+.table-responsive
+  table.table.table-hover.loans
+    thead
+      tr
+        th Заемщик
+        th Сумма
+        th Возвращено
+        th Заработано
+        th Годовая доходность
+    -@loans.each_with_index do |loan,i|
+      tr
+        td Юрлицо #{i+1}
+        td = tabulate loan.amount
+        td = tabulate loan.returned_amount
+        td = tabulate loan.profit
+        td 
+          = tabulate loan.profitability * 100 
+          | %
+p 
+  = link_to "Добавить займ", [:new,:loan], class: "btn btn-primary"      
+  = link_to "Восстановить начальные данные", [:reset,:loans], method: "POST", class: "btn btn-default pull-right", data: {confirm: "Вы уверены?"}

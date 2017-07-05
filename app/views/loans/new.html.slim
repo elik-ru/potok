@@ -1,0 +1,11 @@
+h2 Добавление нового займа
+= bootstrap_form_for @loan, layout: :horizontal do |f|
+  =f.text_field :amount, label: "Выдано средств", append: "Руб"
+  h4 Произведенные выплаты
+  - @loan.payments.each_with_index do |p,i|
+    = f.fields_for :payments,p do |fp|
+      = fp.hidden_field :month
+      = fp.text_field :amount, label: "Месяц #{i+1}", append: "Руб"
+  =f.form_group do    
+    = f.submit "Сохранить займ", class: "btn btn-primary"
+    = link_to "Отменить", [:root], class: "btn btn-link"
