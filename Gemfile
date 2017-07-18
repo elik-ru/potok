@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
   "https://github.com/#{repo_name}.git"
 end
-
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.0'
@@ -42,48 +43,47 @@ end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.0.5'
+  gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
-group :development, :test do 
-  gem 'rspec-rails', '~> 3.0'
-  gem "capybara"
+group :development, :test do
+  gem 'capybara'
+  gem 'database_cleaner'
   gem 'factory_girl_rails'
-  gem "database_cleaner"    
   gem 'rails-controller-testing'
+  gem 'rspec-rails', '~> 3.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'active_model_serializers', '~> 0.8.3'
 
-gem 'unicorn'
-gem 'capistrano' 
+gem 'capistrano'
 gem 'capistrano-bundler'
 gem 'capistrano-rails'
 gem 'capistrano-rbenv'
 gem 'capistrano3-unicorn'
 gem 'rails-i18n'
+gem 'unicorn'
 
-gem 'slim'
-gem 'bootstrap-sass'
-gem 'bootstrap_form'
-gem 'bootstrap-wysihtml5-rails'
-gem 'chosen'
 gem 'bootstrap-chosen-rails'
+gem 'bootstrap-sass'
+gem 'bootstrap-wysihtml5-rails'
+gem 'bootstrap_form'
+gem 'chosen'
 gem 'jquery-turbolinks'
 gem 'jquery-ui-rails'
+gem 'slim'
 
-gem 'russian'
-gem 'unicode_utils'
-gem 'kaminari', '~> 0.17.0'
-gem 'kaminari-bootstrap-3000'
 gem 'active_link_to'
 gem 'capistrano-rails-console'
 gem 'faker'
-
+gem 'kaminari', '~> 0.17.0'
+gem 'kaminari-bootstrap-3000'
+gem 'russian'
+gem 'unicode_utils'

@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 # config valid only for Capistrano 3.1
-#lock '3.5.0'
+# lock '3.5.0'
 
 set :application, 'potok'
 set :repo_url, 'https://github.com/elik-ru/potok.git'
 
-set :linked_files, %w{config/database.yml config/secrets.yml}
-set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
+set :linked_files, %w[config/database.yml config/secrets.yml]
+set :linked_dirs, %w[log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads]
 
-set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
-#set :sidekiq_monit_use_sudo, false
-#set :sidekiq_monit_conf_dir, '/etc/monit.d/rails'
+set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
+# set :sidekiq_monit_use_sudo, false
+# set :sidekiq_monit_conf_dir, '/etc/monit.d/rails'
 
 # set :rollbar_token, 'c84088f45a7943658d4b64a1f5875b3e'
 # set :rollbar_env, Proc.new { fetch :stage }
@@ -46,15 +48,14 @@ set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 # set :keep_releases, 5
 
 namespace :deploy do
+  desc 'Restart application'
 
- desc 'Restart application'
- 
- task :restart do
-   on roles(:app), in: :sequence, wait: 5 do
-     # execute :touch, release_path.join('tmp/restart.txt')
-    invoke 'unicorn:restart'
-   end
- end
- after :publishing, 'deploy:restart'
- after :finishing, 'deploy:cleanup'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      # execute :touch, release_path.join('tmp/restart.txt')
+      invoke 'unicorn:restart'
+    end
+  end
+  after :publishing, 'deploy:restart'
+  after :finishing, 'deploy:cleanup'
 end
